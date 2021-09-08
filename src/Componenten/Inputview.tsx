@@ -16,7 +16,7 @@ const InputView = ({onAdd}: InputViewProps) => {
 
     return ( 
         <div>
-            <input type="button" id="submit" value="Add" onClick={handleClick}/>
+            <input type="button" id="submit" value="Add 1 counter" onClick={handleClick}/>
             <p>een tellertje erbij...</p> 
         </div>
      );
