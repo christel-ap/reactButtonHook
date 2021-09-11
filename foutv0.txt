@@ -1,0 +1,80 @@
+versie met setstate probleem:
+
+
+VoegCountersToe.tsx
+
+import React from 'react';
+import { ChangeEventHandler } from 'react';
+import { useState } from 'react';
+import { Counter } from '../types';
+
+export interface VoegCountersToeProps {
+    onVoegToe: (int: number, counter: Counter) => void
+}
+ 
+const VoegCountersToe = ({onVoegToe}: VoegCountersToeProps) => {
+    const [aantalTellers, setAantalTellers] = useState<number>(1);
+    const handleAantalTellersChange : ChangeEventHandler<HTMLInputElement> = (event) => {
+
+        setAantalTellers(parseInt(event.target.value));
+        
+        onVoegToe(aantalTellers, {
+            name: "teller3",
+            calcul: 3,
+            value: 3
+        });
+        console.log(event.target.value);
+        console.log("tellerke verhoogd");
+        console.log("button clicked");
+    }
+
+    return ( 
+        <div>
+            <input type="number" id="aantalTellers" name="aantalTellers" onChange={handleAantalTellersChange} value={aantalTellers}/> 
+            <p>een tellertje erbij...</p> 
+        </div>
+     );
+}
+ 
+export default VoegCountersToe;
+
+---
+
+Belangrijk om te weten is dat het setten van state niet blocking is, het kan zijn dat de setState nog niet volledig is uitgevoerd.
+
+Dus je mag niet
+
+setAantalTellers(parseInt(event.target.value))
+onVoegToe(aantalTellers, {​​​​​​​​
+
+
+
+doen. Want aantal tellers is zoals je zelf aangaf nog niet geüpdatet naar de laatste state. Daar kan je beter
+
+onVoegToe(parseInt(event.target.value), {​​​​​​​​​
+
+​----
+
+probleem dat er slechts 1 counter wordt toegevoegd:
+
+in VoegCountersToe:
+
+  const initializeCounters2 = (int: number, counter: Counter) => {
+    console.log("int is", int);
+
+    let toetevoegen: Counter[];
+    for(var i=0; i<int; i++){
+      let max = Math.max(...counters.map((g) => g.id!),0) + 1;
+      counter.id = max+i;
+      counter.name = "teller"+max+i;
+      counter.calcul = max+i;
+      counter.value = max+i;
+      setCounters([...counters, counter]);
+      console.log(counter);
+      console.log("counter toegevoegd", int);
+    }
+  }
+
+
+
+

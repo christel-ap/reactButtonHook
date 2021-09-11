@@ -16,11 +16,7 @@ const VoegCountersToe = ({onVoegToe}: VoegCountersToeProps) => {
         
 // op dit moment is de setState van hierboven (setAantalTellers) nog niet uitgevoerd, daarom niet aantalTellers gebruiken
 
-        onVoegToe(parseInt(event.target.value), {
-            name: "teller3",
-            calcul: 3,
-            value: 3
-        });
+        onVoegToe(parseInt(event.target.value), {id:0, name: "xx", value:0, calcul: 0});
 
         console.log(event.target.value);
         console.log("tellerke verhoogd");
